@@ -44,28 +44,23 @@
     /** If this user follows the given name, returns true; otherwise returns false. */
     public boolean follows(String name) {
         //// Replace the following statement with your code
-        for (int i = 0; i < fCount ; i++ ) {
-            if (follows[i] != null && follows[i].equals(name)){
-            return true;
+        String lowerCaseName = name.toLowerCase();
+        for (int i = 0; i < fCount; i++) {
+            if (follows[i] != null && follows[i].toLowerCase().equals(lowerCaseName)) {
+                return true;
             }
         }
         return false;
     }
+    
     /** Makes this user follow the given name. If successful, returns true. 
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
         //// Replace the following statement with your code
-        if (fCount == 10) {
+        if (name == null || fCount >= maxfCount || follows(name)) {
             return false;
         }
-
-        if (follows(name)){
-            return false;
-        }
-        
-        follows[fCount] = name.toLowerCase();
-        fCount++;
-
+        follows[fCount++] = name;
         return true;
     }
 
@@ -94,27 +89,29 @@
     public int countMutual(User other) {
          //// Replace the following statement with your code
         int mutual = 0;
-        for (int i = 0; i < this.fCount ; i++) {
-            for (int j = 0; j < other.fCount ; j++ ) {
-                if (this.follows[i] != null && other.follows[j] != null && this.follows[i].equals(other.follows[j])) {
+        for (int i = 0; i < this.fCount; i++) {
+            for (int j = 0; j < other.fCount; j++) {
+                if (this.follows[i] != null && other.follows[j] != null &&
+                    this.follows[i].toLowerCase().equals(other.follows[j].toLowerCase())) {
                     mutual++;
                 }
             }
         }
-
         return mutual;
     }
 
     /** Checks is this user is a friend of the other user.
      *  (if two users follow each other, they are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        //// Replace the following statement with your code
         if (other == null) {
             return false;
         }
-        return this.follows(other.name) && other.follows(this.name);
-        
+        String thisName = this.name.toLowerCase();
+        String otherName = other.name.toLowerCase();
+
+        return this.follows(otherName) && other.follows(thisName);
     }
+
     /** Returns this user's name, and the names that s/he follows. */
     public String toString() {
         String ans = name + " -> ";

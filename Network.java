@@ -29,7 +29,11 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
-        name = name.toLowerCase();
+        if (name == null || name.trim().isEmpty()) {
+        return null;
+        }
+        
+        String lowerCaseName = name.toLowerCase();
         for (User user : users) {
             if (user != null && user.getName().toLowerCase().equals(lowerCaseName)) {
                 return user;
@@ -44,10 +48,7 @@ public class Network {
     *  If the given name is already a user in this network, does nothing and returns false;
     *  Otherwise, creates a new user with the given name, adds the user to this network, and returns true. */
     public boolean addUser(String name) {
-        if (userCount >= users.length) {
-            return false;
-        }
-        if (getUser(name) != null) {
+        if (name == null || name.trim().isEmpty() || userCount >= users.length || getUser(name) != null) {
             return false;
         }
         users[userCount++] = new User(name);
@@ -58,7 +59,7 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        if (name1.equalsIgnoreCase(name2)) {
+        if (name1 == null || name2 == null || name1.toLowerCase().equals(name2.toLowerCase())) {
             return false;
         }
 
@@ -125,9 +126,9 @@ public class Network {
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
         String result = "Network:\n";
-        for (int i = 0; i < userCount; i++) {
-            if (users[i] != null) {
-                result += users[i].toString() + "\n";
+        for (User user : users) {
+            if (user != null) {
+                result = result + user.toString() + "\n";
             }
         }
         return result.trim();
