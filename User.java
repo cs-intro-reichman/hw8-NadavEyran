@@ -68,7 +68,7 @@
      *  If the name is not in the list, does nothing and returns false. */
     public boolean removeFollowee(String name) {
         //// Replace the following statement with your code
-        if (!follows(name)) {
+         if (name == null || !follows(name)) {
             return false;
         }
 

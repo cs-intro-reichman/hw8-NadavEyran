@@ -32,7 +32,7 @@ public class Network {
         if (name == null || name.trim().isEmpty()) {
         return null;
         }
-        
+
         String lowerCaseName = name.toLowerCase();
         for (User user : users) {
             if (user != null && user.getName().toLowerCase().equals(lowerCaseName)) {
@@ -128,7 +128,7 @@ public class Network {
         String result = "Network:\n";
         for (User user : users) {
             if (user != null) {
-                result = result + user.toString() + "\n";
+                result = result + user.toString() + " \n";
             }
         }
         return result.trim();
