@@ -63,7 +63,7 @@
             return false;
         }
         
-        follows[fCount] = name;
+        follows[fCount] = name.toLowerCase();
         fCount++;
 
         return true;

@@ -29,8 +29,9 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
+        name = name.toLowerCase();
         for (User user : users) {
-            if (user != null && user.getName().equals(name)) {
+            if (user != null && user.getName().toLowerCase().equals(lowerCaseName)) {
                 return user;
             }
         }
@@ -57,6 +58,10 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
+        if (name1.equalsIgnoreCase(name2)) {
+            return false;
+        }
+
         User user1 = getUser(name1);
         User user2 = getUser(name2);
         if (user1 == null || user2 == null) {
@@ -107,7 +112,7 @@ public class Network {
 
     /** Returns the number of times that the given name appears in the follows lists of all
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
-    private int followeeCount(String name) {
+   private int followeeCount(String name) {
         int count = 0;
         for (User user : users) {
             if (user != null && user.follows(name)) {
@@ -119,13 +124,12 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String result = "";
+        String result = "Network:\n";
         for (int i = 0; i < userCount; i++) {
-            result += users[i].toString();
-            if (i < userCount - 1) {
-                result += " , ";
+            if (users[i] != null) {
+                result += users[i].toString() + "\n";
             }
         }
-        return result;
+        return result.trim();
     }
 }
