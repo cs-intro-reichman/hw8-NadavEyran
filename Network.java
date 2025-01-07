@@ -128,7 +128,7 @@ public class Network {
         String result = "Network:\n";
         for (User user : users) {
             if (user != null) {
-                result = result + user.toString() + " \n";
+                result = result + user.toString() + "\n";
             }
         }
         return result.trim();
